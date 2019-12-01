@@ -1,0 +1,19 @@
+<h1>Story</h1>
+<form [formGroup]="this.storyForm" (submit)="onSubmit(this.storyForm.value)">
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      id="task"
+      placeholder="task name"
+      formControlName="title"
+    />
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="storyForm.invalid">
+    Save
+  </button>
+</form>
+<h3>List of stories:</h3>
+<!-- <button (click)="changeTitle('first story')">change title</button> -->
+<hr />
+<app-fairytale [title]="title"></app-fairytale>
