@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import * as fromAction from '../story/store/actions/story.actions';
 import * as StorySelectors from './store/selectors/story.selectors'
 import { Title } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./story.component.css']
 })
 export class StoryComponent implements OnInit {
-  title;
+  title: Observable<any>;
   storyForm: FormGroup;
 
   constructor(private store: Store<any>, private fb: FormBuilder) {
@@ -27,10 +28,7 @@ export class StoryComponent implements OnInit {
 
   ngOnInit() {
 
-    this.store.select(StorySelectors.selectStoryState).subscribe(title => {
-      this.title = title;
-    });
-    console.log(this.title);
+    this.title = this.store.select(StorySelectors.selectStoryState);
 
   }
 
@@ -42,14 +40,14 @@ export class StoryComponent implements OnInit {
   /**
    * Submit the form
    */
-  onSubmit(value) {
+  onSubmit() {
     // if (valid) {
-    console.log(value)
-    const title = value;
+    console.log(this.storyForm.get('title').value)
+    const title = this.storyForm.get('title').value;
 
     // dispatch new action
     this.store.dispatch(fromAction.save({ title }));
-    // this.storyForm.reset();
+    this.storyForm.reset();
     // }
   }
 
