@@ -16,4 +16,13 @@
 <h3>List of stories:</h3>
 <!-- <button (click)="changeTitle('first story')">change title</button> -->
 <hr />
-<app-fairytale [title]="title | async"></app-fairytale>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <app-fairytale [title]="title | async"></app-fairytale>
+    </div>
+    <div class="col-md-6">
+      <app-language [language]="language | async"></app-language>
+    </div>
+  </div>
+</div>

@@ -11,7 +11,7 @@ import * as StoryActions from '../actions/story.actions';
 export class StoryEffects {
 
   loadStorys$ = createEffect(() => {
-    return this.actions$.pipe( 
+    return this.actions$.pipe(
 
       ofType(StoryActions.loadStorys),
       concatMap(() =>
@@ -25,6 +25,6 @@ export class StoryEffects {
 
 
 
-  constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions) { }
 
 }

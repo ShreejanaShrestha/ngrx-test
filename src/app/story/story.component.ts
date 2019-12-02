@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,29 +6,37 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as fromAction from '../story/store/actions/story.actions';
-import * as StorySelectors from './store/selectors/story.selectors'
+import * as StorySelectors from './store/selectors/story.selectors';
+import * as StoryLanguageSelectors from './store/selectors/language.selectors';
+
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
+import { StoryService } from './services/story.service';
 
 
 @Component({
   selector: 'app-story',
   templateUrl: './story.component.html',
-  styleUrls: ['./story.component.css']
+  styleUrls: ['./story.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class StoryComponent implements OnInit {
   title: Observable<any>;
+  language: Observable<any>;
   storyForm: FormGroup;
 
-  constructor(private store: Store<any>, private fb: FormBuilder) {
+  constructor(private store: Store<any>, private fb: FormBuilder, private storyService: StoryService) {
     this.storyForm = this.fb.group({
       title: ['']
     })
   }
 
   ngOnInit() {
+    this.storyService.getData().subscribe((data) => console.log(data))
 
     this.title = this.store.select(StorySelectors.selectStoryState);
+    this.language = this.store.select(StoryLanguageSelectors.selectStoryLanguageState);
 
   }
 
